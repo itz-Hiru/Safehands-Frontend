@@ -23,7 +23,7 @@ const LandingPage = () => {
         }}
         hideHeader
       >
-        <div className="">
+        <div>
           {currentPage === "login" && <Login setCurrentPage={setCurrentPage} />}
           {currentPage === "signup" && (
             <Signup setCurrentPage={setCurrentPage} />

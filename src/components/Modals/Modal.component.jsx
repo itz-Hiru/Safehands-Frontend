@@ -1,5 +1,5 @@
 const Modal = ({ isOpen, onClose, title, hideHeader, children }) => {
-  if (!isOpen) null;
+  if (!isOpen) return null;
   return (
     <div className="fixed inset-0 z-50 bg-black/10 flex justify-center items-center w-full h-full">
       <div className="relative flex flex-col bg-white shadow-md shadow-black/30 rounded-lg overflow-hidden">

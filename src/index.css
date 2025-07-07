@@ -1,1 +1,29 @@
 @import "tailwindcss";
+
+@theme {
+    --breakpoint-3xl: 1920px;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background-color: #FEFEFF;
+    }
+}
+
+@keyframes text-shine {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+.animate-text-shine {
+    animation: text-shine 3s ease-in-out infinite alternate;
+}

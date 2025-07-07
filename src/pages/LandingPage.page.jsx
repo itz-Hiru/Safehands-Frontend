@@ -5,6 +5,7 @@ import { UserContext } from "../context/userContext.context";
 import Modal from "../components/Modals/Modal.component";
 import Login from "./authenticaton/Login.page";
 import Signup from "./authenticaton/Signup.page";
+import Home from "../sections/Home/Home.section";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -12,9 +13,20 @@ const LandingPage = () => {
 
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [currentPage, setCurrentPage] = useState("login");
+
+  const handleCTA = () => {
+    if (!user) {
+      setOpenAuthModal(true);
+    } else {
+      navigate("/dashboard");
+    }
+  };
   return (
     <div>
       <Navbar onClick={() => setOpenAuthModal(true)} user={user} />
+      <div className="px-4 md:px-16 lg:px-24 xl:px-32">
+        <Home onClick={handleCTA} />
+      </div>
       <Modal
         isOpen={openAuthModal}
         onClose={() => {

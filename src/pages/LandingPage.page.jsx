@@ -18,7 +18,11 @@ const LandingPage = () => {
     if (!user) {
       setOpenAuthModal(true);
     } else {
-      navigate("/dashboard");
+      if (user.role === "Admin") {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/dashboard");
+      }
     }
   };
   return (

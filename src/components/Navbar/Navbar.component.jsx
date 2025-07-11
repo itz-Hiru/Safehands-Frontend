@@ -9,27 +9,30 @@ const Navbar = ({ onClick, user }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Handle small screen nav menu
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (navRef.current && !navRef.current.contains(event.target)) {
         setIsMenuOpen(false);
       }
     };
-
     if (isMenuOpen) document.addEventListener("click", handleOutsideClick);
     return () => document.removeEventListener("click", handleOutsideClick);
   }, [isMenuOpen]);
+
+  const scrollToSection = (selector) => {
+    const element = document.querySelector(selector);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <nav
@@ -41,30 +44,29 @@ const Navbar = ({ onClick, user }) => {
       }`}
     >
       {/* Logo */}
-      <a href="/" className="cursor-default">
+      <button onClick={() => scrollToSection("#home")} className="cursor-pointer">
         <img src={LOGO} alt="website logo" className="h-12 w-auto" />
-      </a>
+      </button>
 
       {/* Desktop navbar */}
       <div className="hidden md:flex items-center gap-4 lg:gap-8">
         {NAV_ITEMS.map((item, index) => (
-          <a
+          <button
             key={index}
-            href={item.path}
+            onClick={() => scrollToSection(item.path)}
             className="group flex flex-col gap-0.5 text-slate-800 hover:text-sky-500 transition-all duration-300"
           >
             {item.name}
             <div className="h-[2px] w-0 group-hover:w-full transition-all duration-300 bg-sky-400 rounded-full" />
-          </a>
+          </button>
         ))}
 
-        {/* Login/ Profle Info */}
         {user ? (
           <ProfileInfoCard />
         ) : (
           <button
             type="button"
-            className="bg-sky-300 hover:bg-linear-to-r from-sky-500 to-cyan-400 px-7 py-2 rounded-md text-white text-[16px] font-medium cursor-pointer"
+            className="bg-sky-300 hover:bg-gradient-to-r from-sky-500 to-cyan-400 px-7 py-2 rounded-md text-white text-[16px] font-medium cursor-pointer"
             onClick={onClick}
           >
             Login
@@ -72,7 +74,7 @@ const Navbar = ({ onClick, user }) => {
         )}
       </div>
 
-      {/* Mobile navigation menu */}
+      {/* Mobile menu icon */}
       <div className="flex items-center gap-3 md:hidden">
         <IoMenu
           onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -80,7 +82,7 @@ const Navbar = ({ onClick, user }) => {
         />
       </div>
 
-      {/* Mobile navigation bar */}
+      {/* Mobile nav bar */}
       <div
         className={`fixed top-0 left-0 w-2/3 h-screen bg-white flex flex-col items-center justify-center gap-6 font-medium text-black transition-all duration-300 ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
@@ -93,28 +95,29 @@ const Navbar = ({ onClick, user }) => {
           <IoClose className="text-2xl" />
         </button>
 
-        {/* Login/ Profle Info */}
         {user ? (
           <ProfileInfoCard />
         ) : (
           <button
             type="button"
-            className="bg-sky-300 focus-within:bg-linear-to-r from-sky-500 to-cyan-400 text-white text-[16px] px-8 py-2.5 rounded-md"
+            className="bg-sky-300 focus-within:bg-gradient-to-r from-sky-500 to-cyan-400 text-white text-[16px] px-8 py-2.5 rounded-md"
             onClick={onClick}
           >
             Login
           </button>
         )}
 
-        {/* Nav links */}
         {NAV_ITEMS.map((item, index) => (
-          <a
+          <button
             key={index}
-            href={item.name}
+            onClick={() => {
+              setIsMenuOpen(false);
+              scrollToSection(item.path);
+            }}
             className="text-slate-700 focus-within:text-black"
           >
             {item.name}
-          </a>
+          </button>
         ))}
       </div>
     </nav>

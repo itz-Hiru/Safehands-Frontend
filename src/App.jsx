@@ -4,6 +4,8 @@ import UserProvider from "./context/userContext.context";
 import LandingPage from "./pages/LandingPage.page";
 import Dashboard from "./pages/admin/Dashboard.page";
 import PrivateRoute from "./routes/PrivateRoute.route";
+import TestimonialsPage from "./pages/Testimonials.page"; 
+
 
 const App = () => {
   return (
@@ -13,6 +15,8 @@ const App = () => {
           <Routes>
             {/* Default Routes */}
             <Route path="/" element={<LandingPage />} />
+
+            <Route path="/testimonials" element={<TestimonialsPage />} />
 
             {/* User Routes */}
 
